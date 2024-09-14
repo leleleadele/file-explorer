@@ -5,7 +5,10 @@ export interface ITree {
 export interface IDirectoryItem {
   name: string;
   path: string;
-  contents?: ITree;
+}
+
+export interface IDirectoryFolder extends IDirectoryItem {
+  contents: ITree;
 }
 
 export interface IDialog {

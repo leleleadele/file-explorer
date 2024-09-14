@@ -19,7 +19,7 @@ const CreateButton: React.FC<IProps> = ({ type, path }) => {
   return (
     <>
       <button className={styles.button} onClick={handleClick}>
-        + {type}
+        +{type}
       </button>
     </>
   );

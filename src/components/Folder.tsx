@@ -29,8 +29,8 @@ const Folder: React.FC<IFolderPops> = ({
         </div>
         {name}
         <div className={styles.actionButtons}>
-        <CreateButton type='file' path={path} />
-          <CreateButton type='folder' path={path} />
+          <CreateButton type="file" path={path} />
+          <CreateButton type="folder" path={path} />
           <DeleteButton path={path} />
         </div>
       </span>

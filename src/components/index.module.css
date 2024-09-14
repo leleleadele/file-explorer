@@ -1,5 +1,5 @@
 .arrowContainer {
-  display: inline-block;
+  display: flex;
 }
 .arrowDown {
   border: solid black;
@@ -23,11 +23,19 @@
 
 .directoryItem {
   display: flex;
-  padding: 6px 0;
+  padding: 6px 16px;
   align-items: center;
 
   &:hover {
     background-color: #e0ffff;
+
+    button {
+      visibility: visible;
+    }
+  }
+
+  button {
+    visibility: hidden;
   }
 }
 
@@ -44,11 +52,13 @@
 
 .actionButtons {
   margin-left: auto;
+  display: flex;
+  justify-content: end;
   font-weight: 600;
   color: #008080;
 
   .button {
-    margin-right: 12px;
+    margin-left: 4px;
     background: none;
     color: inherit;
     border: none;
@@ -67,6 +77,8 @@
   width: 100vw;
   height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .dialog {
@@ -89,12 +101,15 @@
     margin-right: 8px;
     margin-left: auto;
   }
-  
+
   .submitButton {
     background: #ff6347;
     color: #fff;
     border: 0;
     padding: 6px;
-
   }
+}
+
+.rootButtons {
+  padding: 0 16px;
 }
