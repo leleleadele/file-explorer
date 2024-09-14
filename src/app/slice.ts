@@ -21,21 +21,27 @@ export const counterSlice = createSlice({
     },
 
     createFile: (state, action: PayloadAction<string>) => {
+      console.log('creating file', action.payload);
       const path = action.payload;
       const parts = path.split('/');
-      let current = state.tree;
+
+      if (parts[0] === '') {
+        parts.shift();
+      }
+
+      let current = { ...state.tree };
 
       for (let i = 0; i < parts.length; i++) {
+        console.log('current within iteration', current);
         const part = parts[i];
 
-        if (!current) {
-          return;
-        }
-        if (current[part] === undefined) {
+        if ((!!current || current === null) && current[part] === undefined) {
           if (i === parts.length - 1) {
+            console.log('case A');
             current[part] = null;
           }
         } else {
+          console.log('case B');
           current[part] = {};
         }
 
@@ -44,6 +50,7 @@ export const counterSlice = createSlice({
       }
 
       state.dialog = null;
+      state.tree = current;
     },
 
     createFolder: (state, action: PayloadAction<string>) => {
@@ -56,7 +63,7 @@ export const counterSlice = createSlice({
 
         if (current[part] === undefined) {
           current[part] = {};
-        }        // @ts-ignore
+        } // @ts-ignore
 
         current = current[part];
       }
@@ -66,7 +73,7 @@ export const counterSlice = createSlice({
 
     deleteItem: (state, action: PayloadAction<string>) => {
       const pathParts = action.payload.split('/');
-      let current = state.tree;
+      let current = { ...state.tree };
 
       if (pathParts[0] === '') {
         pathParts.shift();
@@ -81,24 +88,34 @@ export const counterSlice = createSlice({
 
         if (i === pathParts.length - 1) {
           delete current[part];
-        } else {        // @ts-ignore
+        } else {
+          // @ts-ignore
 
           current = current[part];
         }
       }
+
+      state.tree = current;
     },
 
     openDialog: (state, action: PayloadAction<IDialog>) => {
-        state.dialog = action.payload;
+      state.dialog = action.payload;
     },
 
     closeDialog: (state) => {
-        state.dialog = null
-    }
+      state.dialog = null;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setTree, deleteItem, createFile, createFolder, openDialog, closeDialog } = counterSlice.actions;
+export const {
+  setTree,
+  deleteItem,
+  createFile,
+  createFolder,
+  openDialog,
+  closeDialog,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;

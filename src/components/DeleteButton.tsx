@@ -10,7 +10,8 @@ interface IProps {
 const DeleteButton: React.FC<IProps> = ({ path }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     dispatch(deleteItem(path));
   };
 

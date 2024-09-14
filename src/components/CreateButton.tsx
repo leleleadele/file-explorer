@@ -11,7 +11,8 @@ interface IProps {
 const CreateButton: React.FC<IProps> = ({ type, path }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     dispatch(openDialog({ type, path }));
   };
 

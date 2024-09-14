@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../app/store';
 import { setTree } from '../app/slice';
 import CreateDialog from '../components/CreateDialog';
 import styles from '../components/index.module.css';
+import { responseCopy } from '../consts';
 
 const FileTree = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +18,8 @@ const FileTree = () => {
   >({});
 
   const fetchData = async () => {
-    const data = await getFilesData();
+    //const data = await getFilesData() || [];
+    const data = responseCopy;
     const filesInTree = {};
 
     data.forEach((item: string) => {
@@ -80,9 +82,8 @@ const FileTree = () => {
         <div>
           {foldersInLevel.map((folder) => {
             return (
-              <div>
+              <div key={folder.path}>
                 <Folder
-                  key={folder.path}
                   name={folder.name}
                   // @ts-ignore
                   structureTree={folder.contents}
@@ -97,7 +98,7 @@ const FileTree = () => {
           })}
           <div>
             {filesInLevel.map((file) => {
-              return <File file={file} level={level} />;
+              return <File key={file.path} file={file} level={level} />;
             })}
           </div>
         </div>
