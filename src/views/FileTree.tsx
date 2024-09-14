@@ -14,7 +14,7 @@ import CreateButton from '../components/CreateButton';
 
 const FileTree = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { tree: fileTree } = useSelector((store: RootState) => store.fileTree);
+  const { tree } = useSelector((store: RootState) => store.fileTree);
   const [openDirectories, setOpenDirectories] = useState<
     Record<string, boolean>
   >({});
@@ -55,58 +55,60 @@ const FileTree = () => {
   };
 
   const traverseFileTree = useCallback(() => {
-    const renderFileStructure = (
-      structureTree: ITree,
-      path: string,
-      level: number
-    ) => {
-      const foldersInLevel: IDirectoryFolder[] = [];
-      const filesInLevel: IDirectoryItem[] = [];
+    if (tree) {
+      const renderFileStructure = (
+        structureTree: ITree,
+        path: string,
+        level: number
+      ) => {
+        const foldersInLevel: IDirectoryFolder[] = [];
+        const filesInLevel: IDirectoryItem[] = [];
 
-      Object.entries(structureTree).map(([key, value]) => {
-        if (value) {
-          foldersInLevel.push({
-            name: key,
-            contents: value,
-            path: `${path}/${key}`,
-          });
-        } else {
-          filesInLevel.push({
-            name: key,
-            path: `${path}/${key}`,
-          });
-        }
-      });
+        Object.entries(structureTree).map(([key, value]) => {
+          if (value) {
+            foldersInLevel.push({
+              name: key,
+              contents: value,
+              path: `${path}/${key}`,
+            });
+          } else {
+            filesInLevel.push({
+              name: key,
+              path: `${path}/${key}`,
+            });
+          }
+        });
 
-      return (
-        <div>
-          {foldersInLevel.map((folder) => {
-            return (
-              <div key={folder.path}>
-                <Folder
-                  name={folder.name}
-                  structureTree={folder.contents}
-                  path={folder.path}
-                  level={level}
-                  renderChildren={renderFileStructure}
-                  isOpen={!!openDirectories[folder.path]}
-                  onClick={() => toggleExpanded(folder.path)}
-                />
-              </div>
-            );
-          })}
-          {filesInLevel.map((file) => {
-            return <File key={file.path} file={file} level={level} />;
-          })}
-        </div>
-      );
-    };
+        return (
+          <div>
+            {foldersInLevel.map((folder) => {
+              return (
+                <div key={folder.path}>
+                  <Folder
+                    name={folder.name}
+                    structureTree={folder.contents}
+                    path={folder.path}
+                    level={level}
+                    renderChildren={renderFileStructure}
+                    isOpen={!!openDirectories[folder.path]}
+                    onClick={() => toggleExpanded(folder.path)}
+                  />
+                </div>
+              );
+            })}
+            {filesInLevel.map((file) => {
+              return <File key={file.path} file={file} level={level} />;
+            })}
+          </div>
+        );
+      };
 
-    return renderFileStructure(fileTree, '', 0);
-  }, [fileTree, openDirectories]);
+      return renderFileStructure(tree, '', 0);
+    }
+  }, [tree, openDirectories]);
 
   useEffect(() => {
-    fetchData();
+    !tree && fetchData();
   }, []);
 
   return (

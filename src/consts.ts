@@ -1,3 +1,4 @@
+export const sliceStorageKey = 'slice';
 export const responseCopy = [
   '.editorconfig',
   '.gitignore',

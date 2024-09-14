@@ -1,9 +1,9 @@
 const setNestedProperty = (
   path: string,
   value: null | {},
-  obj: Record<string, any>
+  mutableObj: Record<string, any> | null
 ) => {
-  let objReference = obj; // a moving reference to internal objects within obj
+  let objReference = mutableObj || {};
   const parts = path.split('/');
 
   if (parts[0] === '') {

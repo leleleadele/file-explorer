@@ -4,12 +4,12 @@ import { IDialog, ITree } from '../types';
 import setNestedProperty from '../helpers/setNestedProperty';
 
 export interface FileTreeState {
-  tree: ITree;
+  tree: ITree | null;
   dialog: IDialog | null;
 }
 
 const initialState: FileTreeState = {
-  tree: {},
+  tree: null,
   dialog: null,
 };
 
@@ -17,6 +17,9 @@ export const counterSlice = createSlice({
   name: 'file-tree',
   initialState,
   reducers: {
+    hydrate: (state, action: PayloadAction<FileTreeState>) => {
+      return action.payload;
+    },
     setTree: (state, action: PayloadAction<ITree>) => {
       state.tree = action.payload;
     },
@@ -78,6 +81,7 @@ export const {
   createFolder,
   openDialog,
   closeDialog,
+  hydrate,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
