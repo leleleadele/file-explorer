@@ -1,9 +1,7 @@
 import FileTree from './views/FileTree';
 
 function App() {
-  return (
-      <FileTree />
-  );
+  return <FileTree />;
 }
 
 export default App;

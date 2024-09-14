@@ -1,0 +1,25 @@
+.directoryItem {
+  display: flex;
+  padding: 6px 16px;
+  align-items: center;
+
+  &:hover {
+    background-color: #e0ffff;
+
+    button {
+      visibility: visible;
+    }
+  }
+
+  button {
+    visibility: hidden;
+  }
+}
+
+.actionButtons {
+  margin-left: auto;
+  display: flex;
+  justify-content: end;
+  font-weight: 600;
+  color: #008080;
+}

@@ -1,6 +1,6 @@
-import { IFolderPops } from '../types';
-import CreateButton from './CreateButton';
-import DeleteButton from './DeleteButton';
+import { IFolderPops } from '../../types';
+import CreateButton from '../CreateButton';
+import DeleteButton from '../DeleteButton';
 import styles from './index.module.css';
 const paddingStep = 24;
 
@@ -36,7 +36,7 @@ const Folder: React.FC<IFolderPops> = ({
       </span>
       <div style={{ display: 'flex' }}>
         <div style={{ width: '100%' }}>
-          <div className={`${styles.folderContents} ${isOpen && styles.Open}`}>
+          <div className={`${styles.folderContents} ${isOpen && styles.open}`}>
             {children}
           </div>
         </div>

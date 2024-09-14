@@ -1,7 +1,7 @@
 import styles from './index.module.css';
-import { AppDispatch } from '../app/store';
+import { AppDispatch } from '../../app/store';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '../app/slice';
+import { openDialog } from '../../app/slice';
 
 interface IProps {
   path: string;

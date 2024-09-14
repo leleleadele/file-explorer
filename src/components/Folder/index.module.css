@@ -46,7 +46,7 @@
   transition: max-height 0.5s ease-out;
 }
 
-.Open {
+.open {
   max-height: 100%;
 }
 
@@ -56,60 +56,4 @@
   justify-content: end;
   font-weight: 600;
   color: #008080;
-
-  .button {
-    margin-left: 4px;
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 6px;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-
-    &:hover {
-      color: #ff6347;
-    }
-  }
-}
-
-.pageContainer {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.dialog {
-  width: 480px;
-
-  &::backdrop {
-    background-color: #ff634780;
-  }
-
-  input {
-    height: 32px;
-    margin: 24px 0;
-  }
-
-  .closeButton {
-    background: #d4e5e5;
-    /* color: #fff; */
-    border: 0;
-    padding: 6px;
-    margin-right: 8px;
-    margin-left: auto;
-  }
-
-  .submitButton {
-    background: #ff6347;
-    color: #fff;
-    border: 0;
-    padding: 6px;
-  }
-}
-
-.rootButtons {
-  padding: 0 16px;
 }

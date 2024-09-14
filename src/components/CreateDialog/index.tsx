@@ -1,6 +1,6 @@
-import { AppDispatch, RootState } from '../app/store';
+import { AppDispatch, RootState } from '../../app/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeDialog, createFile, createFolder } from '../app/slice';
+import { closeDialog, createFile, createFolder } from '../../app/slice';
 import styles from './index.module.css';
 import { useEffect, useRef, useState } from 'react';
 

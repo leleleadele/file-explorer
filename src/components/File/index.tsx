@@ -1,7 +1,7 @@
-import FileIcon from '../icons/File';
-import { IDirectoryItem } from '../types';
-import CreateButton from './CreateButton';
-import DeleteButton from './DeleteButton';
+import FileIcon from '../../icons/File';
+import { IDirectoryItem } from '../../types';
+import CreateButton from '../CreateButton';
+import DeleteButton from '../DeleteButton';
 import styles from './index.module.css';
 const paddingStep = 24;
 

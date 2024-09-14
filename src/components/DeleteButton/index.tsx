@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import styles from './index.module.css';
-import { AppDispatch } from '../app/store';
-import { deleteItem } from '../app/slice';
+import { AppDispatch } from '../../app/store';
+import { deleteItem } from '../../app/slice';
 
 interface IProps {
   path: string;

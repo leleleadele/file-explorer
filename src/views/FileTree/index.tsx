@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import getFilesData from '../api/getFilesData';
-import { ITree, IDirectoryItem, IDirectoryFolder } from '../types';
-import Folder from '../components/Folder';
-import File from '../components/File';
+import getFilesData from '../../api/getFilesData';
+import { ITree, IDirectoryItem, IDirectoryFolder } from '../../types';
+import Folder from '../../components/Folder';
+import File from '../../components/File';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../app/store';
-import { setTree } from '../app/slice';
-import CreateDialog from '../components/CreateDialog';
-import styles from '../components/index.module.css';
-import { responseCopy } from '../consts';
-import path from 'path';
-import CreateButton from '../components/CreateButton';
+import { AppDispatch, RootState } from '../../app/store';
+import { setTree } from '../../app/slice';
+import CreateDialog from '../../components/CreateDialog';
+import styles from './index.module.css';
+import { responseCopy } from '../../consts';
+import CreateButton from '../../components/CreateButton';
+import pathsToFileTree from '../../helpers/pathsToFileTree';
 
 const FileTree = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,27 +22,8 @@ const FileTree = () => {
   const fetchData = async () => {
     //const data = await getFilesData() || [];
     const data = responseCopy;
-    const filesInTree = {};
 
-    data.forEach((item: string) => {
-      const levels = item.split('/');
-
-      let current: ITree = filesInTree;
-
-      levels.forEach((level, index) => {
-        if (!current[level]) {
-          if (index === levels.length - 1) {
-            current[level] = null;
-          } else {
-            current[level] = {};
-          }
-        }
-        // @ts-ignore
-        current = current[level];
-      });
-    });
-
-    dispatch(setTree(filesInTree));
+    dispatch(setTree(pathsToFileTree(data)));
   };
 
   const toggleExpanded = (path: string) => {

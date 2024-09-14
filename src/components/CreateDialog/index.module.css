@@ -1,0 +1,27 @@
+.dialog {
+  width: 480px;
+
+  &::backdrop {
+    background-color: #ff634780;
+  }
+
+  input {
+    height: 32px;
+    margin: 24px 0;
+  }
+
+  .closeButton {
+    background: #d4e5e5;
+    border: 0;
+    padding: 6px;
+    margin-right: 8px;
+    margin-left: auto;
+  }
+
+  .submitButton {
+    background: #ff6347;
+    color: #fff;
+    border: 0;
+    padding: 6px;
+  }
+}
