@@ -1,5 +1,10 @@
 .dialog {
-  width: 480px;
+  max-width: 480px;
+  width: fit-content;
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
 
   &::backdrop {
     background-color: #e0ffff80;
@@ -13,7 +18,7 @@
   }
 
   .buttonPanel {
-    display: flex; 
+    display: flex;
 
     button {
       border: 0;
