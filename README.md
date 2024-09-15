@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+# Access the App
+
+The app is deployed to [adeles-file-explorer.netlify.app](https://adeles-file-explorer.netlify.app).
+
+
+
+# Running the App Locally
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
