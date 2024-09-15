@@ -1,14 +1,36 @@
-import { AppDispatch, RootState } from '../../app/store';
+import { AppDispatch, RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeDialog, createFile, createFolder } from '../../app/slice';
+import { closeDialog, createFile, createFolder } from '../../store/slice';
 import styles from './index.module.css';
 import { useEffect, useRef, useState } from 'react';
 
-const CreateDialog = () => {
+const CreateDialog: React.FC = () => {
   const dialog = useSelector((state: RootState) => state.fileTree.dialog);
   const dispatch = useDispatch<AppDispatch>();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+
+  const message = `Enter ${dialog?.type} name:`;
+
+  const handleClose = (): void => {
+    setInputValue('');
+    dispatch(closeDialog());
+  };
+
+  const handleSubmit = (): void => {
+    if (dialog) {
+      setInputValue('');
+      dispatch(
+        dialog.type === 'file'
+          ? createFile(`${dialog.path}/${inputValue}`)
+          : createFolder(`${dialog.path}/${inputValue}`)
+      );
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(e.target.value);
+  };
 
   useEffect(() => {
     if (dialog) dialogRef.current?.showModal();
@@ -18,32 +40,17 @@ const CreateDialog = () => {
     return null;
   }
 
-  const handleSubmit = () => {
-    dispatch(
-      dialog?.type === 'file'
-        ? createFile(`${dialog.path}/${inputValue}`)
-        : createFolder(`${dialog.path}/${inputValue}`)
-    );
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
   return (
     <dialog className={styles.dialog} ref={dialogRef}>
-      <p>Enter {dialog.type} name:</p>
+      <p>{message}</p>
       <input
         type="text"
-        placeholder="write something"
+        placeholder="Write something..."
         value={inputValue}
         onChange={handleChange}
       ></input>
-      <div>
-        <button
-          className={styles.closeButton}
-          onClick={() => dispatch(closeDialog())}
-        >
+      <div className={styles.buttonPanel}>
+        <button className={styles.closeButton} onClick={handleClose}>
           Close
         </button>
         <button className={styles.submitButton} onClick={handleSubmit}>

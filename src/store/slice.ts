@@ -2,13 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { IDialog, ITree } from '../types';
 import setNestedProperty from '../helpers/setNestedProperty';
+import deleteNestedProperty from 'helpers/deleteNestedProperty';
 
-export interface FileTreeState {
+export interface IFileTreeSlice {
   tree: ITree | null;
   dialog: IDialog | null;
 }
 
-const initialState: FileTreeState = {
+const initialState: IFileTreeSlice = {
   tree: null,
   dialog: null,
 };
@@ -17,7 +18,7 @@ export const counterSlice = createSlice({
   name: 'file-tree',
   initialState,
   reducers: {
-    hydrate: (state, action: PayloadAction<FileTreeState>) => {
+    hydrate: (_, action: PayloadAction<IFileTreeSlice>) => {
       return action.payload;
     },
     setTree: (state, action: PayloadAction<ITree>) => {
@@ -37,30 +38,7 @@ export const counterSlice = createSlice({
     },
 
     deleteItem: (state, action: PayloadAction<string>) => {
-      const pathParts = action.payload.split('/');
-      let current = { ...state.tree };
-
-      if (pathParts[0] === '') {
-        pathParts.shift();
-      }
-
-      for (let i = 0; i < pathParts.length; i++) {
-        const part = pathParts[i];
-
-        if (current[part] === undefined) {
-          return;
-        }
-
-        if (i === pathParts.length - 1) {
-          delete current[part];
-        } else {
-          // @ts-ignore
-
-          current = current[part];
-        }
-      }
-
-      state.tree = current;
+      deleteNestedProperty(action.payload, state.tree);
     },
 
     openDialog: (state, action: PayloadAction<IDialog>) => {
@@ -73,7 +51,6 @@ export const counterSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   setTree,
   deleteItem,

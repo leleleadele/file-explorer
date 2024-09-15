@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { responseBackup } from 'consts';
 
 const getFilesData = async () => {
   const url = 'https://ab-file-explorer.athleticnext.workers.dev/?file=regular';
@@ -9,7 +10,11 @@ const getFilesData = async () => {
       return res.data.filepaths;
     })
     .catch((error) => {
-      console.error('Error occurred:', error);
+      console.error(
+        'Error while fetching filepaths. For demo purposes returning backup instead:',
+        error
+      );
+      return responseBackup;
     });
 };
 

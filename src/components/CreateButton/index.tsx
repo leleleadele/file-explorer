@@ -1,7 +1,7 @@
 import styles from './index.module.css';
-import { AppDispatch } from '../../app/store';
+import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '../../app/slice';
+import { openDialog } from '../../store/slice';
 
 interface IProps {
   path: string;
@@ -11,17 +11,15 @@ interface IProps {
 const CreateButton: React.FC<IProps> = ({ type, path }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>): void => {
     e.stopPropagation();
     dispatch(openDialog({ type, path }));
   };
 
   return (
-    <>
-      <button className={styles.button} onClick={handleClick}>
-        +{type}
-      </button>
-    </>
+    <button className={styles.button} onClick={handleClick}>
+      +{type}
+    </button>
   );
 };
 

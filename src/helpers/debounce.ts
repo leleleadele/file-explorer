@@ -1,12 +1,12 @@
-const debounce = (func: any, timeout = 300) => {
-  let timer: any;
+const debounce = (
+  fn: Function,
+  ms: number
+): ((this: any, ...args: any[]) => void) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
 
-  //@ts-ignore
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
+  return function (this: any, ...args: any[]) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
 };
 

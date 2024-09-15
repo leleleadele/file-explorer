@@ -1,5 +1,8 @@
+export const paddingStep = 24;
+
 export const sliceStorageKey = 'slice';
-export const responseCopy = [
+
+export const responseBackup = [
   '.editorconfig',
   '.gitignore',
   '.idea/vcs.xml',

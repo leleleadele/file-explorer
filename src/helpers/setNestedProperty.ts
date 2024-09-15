@@ -2,7 +2,7 @@ const setNestedProperty = (
   path: string,
   value: null | {},
   mutableObj: Record<string, any> | null
-) => {
+): void => {
   let objReference = mutableObj || {};
   const parts = path.split('/');
 

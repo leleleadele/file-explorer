@@ -16,8 +16,8 @@ const pathsToFileTree = (data: Array<string>): ITree => {
           current[level] = {};
         }
       }
-      // @ts-ignore
-      current = current[level];
+
+      current = current[level] as ITree;
     });
   });
 

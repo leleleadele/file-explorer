@@ -1,32 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import getFilesData from '../../api/getFilesData';
 import { ITree, IDirectoryItem, IDirectoryFolder } from '../../types';
 import Folder from '../../components/Folder';
 import File from '../../components/File';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/store';
-import { setTree } from '../../app/slice';
+import { AppDispatch, RootState } from '../../store';
+import { setTree } from '../../store/slice';
 import CreateDialog from '../../components/CreateDialog';
 import styles from './index.module.css';
-import { responseCopy } from '../../consts';
 import CreateButton from '../../components/CreateButton';
 import pathsToFileTree from '../../helpers/pathsToFileTree';
 
-const FileTree = () => {
+const FileTree: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { tree } = useSelector((store: RootState) => store.fileTree);
   const [openDirectories, setOpenDirectories] = useState<
     Record<string, boolean>
   >({});
 
-  const fetchData = async () => {
-    //const data = await getFilesData() || [];
-    const data = responseCopy;
+  const fetchData = async (): Promise<void> => {
+    const data = await getFilesData();
 
     dispatch(setTree(pathsToFileTree(data)));
   };
 
-  const toggleExpanded = (path: string) => {
+  const toggleExpanded = (path: string): void => {
     setOpenDirectories((prev: Record<string, boolean>) => {
       return {
         ...prev,
@@ -35,7 +33,7 @@ const FileTree = () => {
     });
   };
 
-  const traverseFileTree = useCallback(() => {
+  const traverseFileTree = useCallback((): ReactNode => {
     if (tree) {
       const renderFileStructure = (
         structureTree: ITree,

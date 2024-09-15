@@ -1,10 +1,24 @@
-import { IFolderPops } from '../../types';
+import { paddingStep } from 'consts';
+import { ITree } from '../../types';
 import CreateButton from '../CreateButton';
 import DeleteButton from '../DeleteButton';
 import styles from './index.module.css';
-const paddingStep = 24;
 
-const Folder: React.FC<IFolderPops> = ({
+interface IProps {
+  name: string;
+  path: string;
+  level: number;
+  structureTree: ITree;
+  renderChildren: (
+    structureTree: ITree,
+    path: string,
+    level: number
+  ) => JSX.Element;
+  isOpen: boolean;
+  onClick: () => void;
+}
+
+const Folder: React.FC<IProps> = ({
   name,
   structureTree,
   path,
