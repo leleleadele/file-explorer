@@ -44,7 +44,7 @@
   box-sizing: border-box;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease-out;
+  transition: max-height 0.15s ease-out;
 }
 
 .open {
