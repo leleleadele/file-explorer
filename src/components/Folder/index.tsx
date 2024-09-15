@@ -3,6 +3,9 @@ import { ITree } from '../../types';
 import CreateButton from '../CreateButton';
 import DeleteButton from '../DeleteButton';
 import styles from './index.module.css';
+import { AppDispatch, RootState } from 'store';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleExpandedDirectories } from 'store/slice';
 
 interface IProps {
   name: string;
@@ -14,8 +17,6 @@ interface IProps {
     path: string,
     level: number
   ) => JSX.Element;
-  isOpen: boolean;
-  onClick: () => void;
 }
 
 const Folder: React.FC<IProps> = ({
@@ -24,16 +25,21 @@ const Folder: React.FC<IProps> = ({
   path,
   level,
   renderChildren,
-  isOpen,
-  onClick,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { openDirectories } = useSelector((state: RootState) => state.fileTree);
+  const isOpen = !!openDirectories[path];
   const children = renderChildren(structureTree, path, level + 1);
+
+  const toggleExpanded = (): void => {
+    dispatch(toggleExpandedDirectories(path));
+  };
 
   return (
     <div className={styles.wrapper}>
       <span
         className={styles.directoryItem}
-        onClick={onClick}
+        onClick={toggleExpanded}
         style={{ paddingLeft: `${(level + 1) * paddingStep}px` }}
       >
         <div className={styles.arrowContainer}>

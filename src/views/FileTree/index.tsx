@@ -14,23 +14,11 @@ import pathsToFileTree from '../../helpers/pathsToFileTree';
 const FileTree: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { tree } = useSelector((store: RootState) => store.fileTree);
-  const [openDirectories, setOpenDirectories] = useState<
-    Record<string, boolean>
-  >({});
 
   const fetchData = async (): Promise<void> => {
     const data = await getFilesData();
 
     dispatch(setTree(pathsToFileTree(data)));
-  };
-
-  const toggleExpanded = (path: string): void => {
-    setOpenDirectories((prev: Record<string, boolean>) => {
-      return {
-        ...prev,
-        [path]: !prev[path],
-      };
-    });
   };
 
   const traverseFileTree = useCallback((): ReactNode => {
@@ -69,8 +57,6 @@ const FileTree: React.FC = () => {
                     path={folder.path}
                     level={level}
                     renderChildren={renderFileStructure}
-                    isOpen={!!openDirectories[folder.path]}
-                    onClick={() => toggleExpanded(folder.path)}
                   />
                 </div>
               );
@@ -84,7 +70,7 @@ const FileTree: React.FC = () => {
 
       return renderFileStructure(tree, '', 0);
     }
-  }, [tree, openDirectories]);
+  }, [tree]);
 
   useEffect(() => {
     !tree && fetchData();

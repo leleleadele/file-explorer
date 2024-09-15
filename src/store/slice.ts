@@ -7,11 +7,13 @@ import deleteNestedProperty from 'helpers/deleteNestedProperty';
 export interface IFileTreeSlice {
   tree: ITree | null;
   dialog: IDialog | null;
+  openDirectories: Record<string, boolean>;
 }
 
 const initialState: IFileTreeSlice = {
   tree: null,
   dialog: null,
+  openDirectories: {},
 };
 
 export const counterSlice = createSlice({
@@ -28,12 +30,14 @@ export const counterSlice = createSlice({
     createFile: (state, action: PayloadAction<string>) => {
       const path = action.payload;
       setNestedProperty(path, null, state.tree);
+      
       state.dialog = null;
     },
 
     createFolder: (state, action: PayloadAction<string>) => {
       const path = action.payload;
       setNestedProperty(path, {}, state.tree);
+
       state.dialog = null;
     },
 
@@ -48,6 +52,15 @@ export const counterSlice = createSlice({
     closeDialog: (state) => {
       state.dialog = null;
     },
+
+    toggleExpandedDirectories: (state, action: PayloadAction<string>) => {
+      const path = action.payload;
+
+      state.openDirectories = {
+        ...state.openDirectories,
+        [path]: !state.openDirectories[path],
+      }
+    }
   },
 });
 
@@ -58,6 +71,7 @@ export const {
   createFolder,
   openDialog,
   closeDialog,
+  toggleExpandedDirectories,
   hydrate,
 } = counterSlice.actions;
 
