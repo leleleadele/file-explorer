@@ -12,9 +12,9 @@ Features:
 * Any user actions are stored locally and the state of the file tree is preserved between page refreshes, unless local storage is cleared.
 
 Known issues:
-* Due to the server sometimes not responding correctly, added a fallback response copy that will be used in case the request fails (for demo purposes; just to make sure that the app's file exploring functionality can be tested at all times);
+* Due to the server sometimes not responding correctly, I decided to add **a fallback response copy that will be used in case the request fails** (for demo purposes; just to make sure that the app's file exploring functionality can be tested at all times);
 * Since there is no validation in place for file/folder name input, there is currently no restrictions as to what kind of names to enter. The user is able to enter pre-existing file/folder names and rewrite existing ones, if such with the same name exist.
-* Since the app only registers file tree changes locally and does not trigger any updates on the server side, the server side file paths and locally stored file paths may likely fall out of sync. As long as the file paths are stored in local memory, files data from the server WILL NOT be repeatedly requested.
+* Since the app only registers file tree changes locally and does not trigger any updates on the server side, the server side file paths and locally stored file paths may likely fall out of sync. **As long as the file paths are stored in local memory, files data from the server WILL NOT be repeatedly requested.**
   
 ## Running the App Locally
 
