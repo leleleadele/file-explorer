@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import getFilesData from '../../api/getFilesData';
 import { ITree, IDirectoryItem, IDirectoryFolder } from '../../types';
 import Folder from '../../components/Folder';
@@ -8,8 +8,8 @@ import { AppDispatch, RootState } from '../../store';
 import { setTree } from '../../store/slice';
 import CreateDialog from '../../components/CreateDialog';
 import styles from './index.module.css';
-import CreateButton from '../../components/CreateButton';
 import pathsToFileTree from '../../helpers/pathsToFileTree';
+import Header from 'components/Header';
 
 const FileTree: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +31,7 @@ const FileTree: React.FC = () => {
         const foldersInLevel: IDirectoryFolder[] = [];
         const filesInLevel: IDirectoryItem[] = [];
 
-        Object.entries(structureTree).map(([key, value]) => {
+        Object.entries(structureTree).forEach(([key, value]) => {
           if (value) {
             foldersInLevel.push({
               name: key,
@@ -48,22 +48,30 @@ const FileTree: React.FC = () => {
 
         return (
           <div>
-            {foldersInLevel.map((folder) => {
-              return (
-                <div key={folder.path}>
-                  <Folder
-                    name={folder.name}
-                    structureTree={folder.contents}
-                    path={folder.path}
-                    level={level}
-                    renderChildren={renderFileStructure}
-                  />
-                </div>
-              );
-            })}
-            {filesInLevel.map((file) => {
-              return <File key={file.path} file={file} level={level} />;
-            })}
+            {foldersInLevel
+              .sort((a, b) => {
+                return a.name.localeCompare(b.name);
+              })
+              .map((folder) => {
+                return (
+                  <div key={folder.path}>
+                    <Folder
+                      name={folder.name}
+                      structureTree={folder.contents}
+                      path={folder.path}
+                      level={level}
+                      renderChildren={renderFileStructure}
+                    />
+                  </div>
+                );
+              })}
+            {filesInLevel
+              .sort((a, b) => {
+                return a.name.localeCompare(b.name);
+              })
+              .map((file) => {
+                return <File key={file.path} file={file} level={level} />;
+              })}
           </div>
         );
       };
@@ -74,19 +82,12 @@ const FileTree: React.FC = () => {
 
   useEffect(() => {
     !tree && fetchData();
-  }, []);
+  }, [tree]);
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.rootButtons}>
-        <div className={styles.actionButtons}>
-          <CreateButton type="file" path="" />
-          <CreateButton type="folder" path="" />
-        </div>
-      </div>
-
+      <Header />
       {traverseFileTree()}
-
       <CreateDialog />
     </div>
   );

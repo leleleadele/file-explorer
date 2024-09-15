@@ -1,19 +1,8 @@
-.actionButtons {
-  margin-left: auto;
-  display: flex;
-  justify-content: end;
-  font-weight: 600;
-  color: #008080;
-}
-
 .pageContainer {
   width: 100vw;
   height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
-}
-
-.rootButtons {
-  padding: 16px;
+  padding-top: 64px;
 }
