@@ -3,6 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IDialog, ITree } from '../types';
 import setNestedProperty from '../helpers/setNestedProperty';
 import deleteNestedProperty from 'helpers/deleteNestedProperty';
+import { initialData } from 'consts';
+import pathsToFileTree from 'helpers/pathsToFileTree';
 
 export interface IFileTreeSlice {
   tree: ITree | null;
@@ -11,7 +13,7 @@ export interface IFileTreeSlice {
 }
 
 const initialState: IFileTreeSlice = {
-  tree: null,
+  tree: pathsToFileTree(initialData),
   dialog: null,
   openDirectories: {},
 };
@@ -22,9 +24,6 @@ export const counterSlice = createSlice({
   reducers: {
     hydrate: (_, action: PayloadAction<IFileTreeSlice>) => {
       return action.payload;
-    },
-    setTree: (state, action: PayloadAction<ITree>) => {
-      state.tree = action.payload;
     },
 
     createFile: (state, action: PayloadAction<string>) => {
@@ -65,7 +64,6 @@ export const counterSlice = createSlice({
 });
 
 export const {
-  setTree,
   deleteItem,
   createFile,
   createFolder,

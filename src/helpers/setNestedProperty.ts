@@ -10,7 +10,7 @@ const setNestedProperty = (
     parts.shift();
   }
 
-  for (var i = 0; i < parts.length - 1; i++) {
+  for (let i = 0; i < parts.length - 1; i++) {
     var parameter = parts[i];
 
     if (!objReference[parameter]) {
